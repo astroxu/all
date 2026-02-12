@@ -51,24 +51,55 @@ function newCompliment(){
 
 /* ===== MINI GAME ===== */
 if(document.getElementById("memoryGame")){
-let emojis=["❤️","🌹","💍","👑","❤️","🌹","💍","👑"];
-emojis.sort(()=>Math.random()-0.5);
-let game=document.getElementById("memoryGame");
-let first=null,second=null,lock=false;
-let moves=0,score=0;
-emojis.forEach(e=>{
-let div=document.createElement("div");div.className="cardItem";div.dataset.value=e;div.innerHTML="?";
-div.onclick=()=>{
-if(lock||div===first) return;
-div.innerHTML=e;
-if(!first){first=div;}
-else{
-second=div;moves++;document.getElementById("moves").innerText=moves;
-if(first.dataset.value===second.dataset.value){score++;document.getElementById("score").innerText=score;first=null;second=null;
-if(score===4){setTimeout(()=>{alert("You won ❤️");complete("game");},400);}}
-else{lock=true;setTimeout(()=>{first.innerHTML="?";second.innerHTML="?";first=null;second=null;lock=false;},800);}
-}};game.appendChild(div);
-});
+    let emojis=["❤️","🌹","💍","👑","❤️","🌹","💍","👑"]; // pairs
+    emojis.sort(()=>Math.random()-0.5); // shuffle
+    let game=document.getElementById("memoryGame");
+    let first=null, second=null, lock=false;
+    let moves=0, score=0;
+
+    game.innerHTML=""; // clear container
+
+    emojis.forEach(e=>{
+        let div=document.createElement("div");
+        div.className="cardItem";
+        div.dataset.value=e;
+        div.innerHTML="?";
+
+        div.onclick = ()=>{
+            if(lock || div === first) return;
+            div.innerHTML=e;
+            if(!first){
+                first=div;
+            } else {
+                second=div;
+                moves++;
+                document.getElementById("moves").innerText = moves;
+
+                if(first.dataset.value === second.dataset.value){
+                    score++;
+                    document.getElementById("score").innerText = score;
+                    first=null;
+                    second=null;
+                    if(score === emojis.length/2){
+                        setTimeout(()=>{
+                            alert("You won ❤️");
+                            complete("game"); // go back to dashboard
+                        },400);
+                    }
+                } else {
+                    lock=true;
+                    setTimeout(()=>{
+                        first.innerHTML="?";
+                        second.innerHTML="?";
+                        first=null;
+                        second=null;
+                        lock=false;
+                    },800);
+                }
+            }
+        };
+        game.appendChild(div);
+    });
 }
 
 /* ===== LOVE CLOCK ===== */
