@@ -35,10 +35,19 @@ window.onload=checkUnlock;
 
 /* ===== COMPLIMENTS JAR ===== */
 function newCompliment(){
-let list=["You are beautiful","You make my world brighter","You have the cutest smile","You are my happiness","You are amazing"];
-let el=document.getElementById("compliment");
-if(el) el.innerText=list[Math.floor(Math.random()*list.length)];
+    let compliments=[
+        "You light up my world ❤️",
+        "Your smile is magic 🌟",
+        "I love you more every day 💖",
+        "You make everything better 🥰",
+        "You are my inspiration 💌",
+        "Forever grateful for you 🌹"
+    ];
+    let c = compliments[Math.floor(Math.random()*compliments.length)];
+    let el = document.getElementById("compliment");
+    if(el) el.innerText = c;
 }
+
 
 /* ===== MINI GAME ===== */
 if(document.getElementById("memoryGame")){
