@@ -1,22 +1,25 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+  <meta charset="UTF-8">
   <title>Mini Game</title>
   <link rel="stylesheet" href="style.css">
-  <script src="script.js"></script>
+  <script src="script.js" defer></script>
 </head>
 <body>
-<div class="center">
-<div class="card">
-<h1>🎮 Love Memory Quest</h1>
-<p>Match all hearts to win ❤️</p>
-<div id="memoryGame"></div>
-<div class="score">
-<p>Moves: <span id="moves">0</span></p>
-<p>Score: <span id="score">0</span></p>
-</div>
-<button onclick="location.reload()">Restart</button>
-</div>
-</div>
+  <div class="center">
+    <div class="card">
+      <h1>🎮 Love Memory Quest</h1>
+      <p>Match all hearts to win ❤️</p>
+
+      <!-- THIS DIV IS REQUIRED FOR THE CARDS -->
+      <div id="memoryGame"></div>
+
+      <div class="score">
+        <p>Moves: <span id="moves">0</span></p>
+        <p>Score: <span id="score">0</span></p>
+      </div>
+    </div>
+  </div>
 </body>
 </html>
