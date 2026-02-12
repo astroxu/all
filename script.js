@@ -18,11 +18,13 @@ if(el) typeText(el,"Every moment with you feels like magic... explore everything
 
 /* ===== PASSWORD PAGE ===== */
 function checkPassword(){
-let pass=document.getElementById("pass").value;
-if(pass==="24072022") window.location="home.html";
-else document.getElementById("error").innerText="Wrong password";
+    let pass = document.getElementById("pass").value;
+    if(pass === "24072022"){  // <-- change this to whatever password you want
+        window.location = "home.html";
+    } else {
+        document.getElementById("error").innerText = "Wrong password!";
+    }
 }
-
 /* ===== UNLOCK SYSTEM ===== */
 function complete(section){
   localStorage.setItem(section,true); // mark section as done
