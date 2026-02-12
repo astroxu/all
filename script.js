@@ -24,7 +24,12 @@ else document.getElementById("error").innerText="Wrong password";
 }
 
 /* ===== UNLOCK SYSTEM ===== */
-function complete(section){localStorage.setItem(section,true);checkUnlock();}
+function complete(section){
+  localStorage.setItem(section,true); // mark section as done
+  checkUnlock(); // check if final icon should unlock
+  // redirect back to home/dashboard
+  window.location = "home.html";
+}
 function checkUnlock(){
 let items=["letter","music","jar","thanks","game","timeline","photos"];
 let done=items.every(i=>localStorage.getItem(i));
@@ -33,34 +38,78 @@ if(done&&btn){btn.classList.remove("locked");btn.innerHTML="<p>💍 Final Questi
 }
 window.onload=checkUnlock;
 
-/* ===== COMPLIMENTS JAR ===== */
+// ===== Compliments Jar =====
 function newCompliment(){
-let list=["You are beautiful","You make my world brighter","You have the cutest smile","You are my happiness","You are amazing"];
-let el=document.getElementById("compliment");
-if(el) el.innerText=list[Math.floor(Math.random()*list.length)];
+    let compliments=[
+        "You light up my world ❤️",
+        "Your smile is magic 🌟",
+        "I love you more every day 💖",
+        "You make everything better 🥰",
+        "You are my inspiration 💌",
+        "Forever grateful for you 🌹"
+    ];
+    let c = compliments[Math.floor(Math.random()*compliments.length)];
+    let el = document.getElementById("compliment");
+    if(el) el.innerText = c;
 }
+// ===== Mini-Game =====
+window.onload = function() {
+    checkUnlock(); // unlock system
 
-/* ===== MINI GAME ===== */
-if(document.getElementById("memoryGame")){
-let emojis=["❤️","🌹","💍","👑","❤️","🌹","💍","👑"];
-emojis.sort(()=>Math.random()-0.5);
-let game=document.getElementById("memoryGame");
-let first=null,second=null,lock=false;
-let moves=0,score=0;
-emojis.forEach(e=>{
-let div=document.createElement("div");div.className="cardItem";div.dataset.value=e;div.innerHTML="?";
-div.onclick=()=>{
-if(lock||div===first) return;
-div.innerHTML=e;
-if(!first){first=div;}
-else{
-second=div;moves++;document.getElementById("moves").innerText=moves;
-if(first.dataset.value===second.dataset.value){score++;document.getElementById("score").innerText=score;first=null;second=null;
-if(score===4){setTimeout(()=>{alert("You won ❤️");complete("game");},400);}}
-else{lock=true;setTimeout(()=>{first.innerHTML="?";second.innerHTML="?";first=null;second=null;lock=false;},800);}
-}};game.appendChild(div);
-});
-}
+    // Mini-game
+    if(document.getElementById("memoryGame")){
+        let emojis=["❤️","🌹","💍","👑","❤️","🌹","💍","👑"];
+        emojis.sort(()=>Math.random()-0.5);
+        let game=document.getElementById("memoryGame");
+        let first=null, second=null, lock=false;
+        let moves=0, score=0;
+
+        // Clear game container
+        game.innerHTML = "";
+
+        emojis.forEach(e=>{
+            let div=document.createElement("div");
+            div.className="cardItem";
+            div.dataset.value=e;
+            div.innerHTML="?";
+
+            div.onclick = ()=>{
+                if(lock || div === first) return;
+                div.innerHTML=e;
+                if(!first){ first=div; }
+                else{
+                    second=div;
+                    moves++;
+                    document.getElementById("moves").innerText = moves;
+                    if(first.dataset.value === second.dataset.value){
+                        score++;
+                        document.getElementById("score").innerText = score;
+                        first=null; second=null;
+                        if(score === emojis.length/2){ 
+                            setTimeout(()=>{
+                                alert("You won ❤️");
+                                complete("game"); // back to dashboard
+                            }, 400);
+                        }
+                    } else {
+                        lock=true;
+                        setTimeout(()=>{
+                            first.innerHTML="?";
+                            second.innerHTML="?";
+                            first=null; second=null; lock=false;
+                        }, 800);
+                    }
+                }
+            };
+            game.appendChild(div);
+        });
+    }
+
+    // Typing animation for homepage text
+    if(document.getElementById("typingText")){
+        typeText(document.getElementById("typingText"), "Every moment with you feels like magic...", 50);
+    }
+
 
 /* ===== LOVE CLOCK ===== */
 function updateLoveClock(){
